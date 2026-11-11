@@ -12,6 +12,10 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/hooks/use-auth";
+import { useRealtimeSync } from "@/hooks/use-realtime";
+import { SiteHeader } from "@/components/sports/site-header";
 
 function NotFoundComponent() {
   return (
@@ -75,22 +79,26 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
-    // Replace these placeholders with the app's name and description when first building the app.
-    // Each content route, / included, must still set its own head(). Never add og:image or
-    // twitter:image here: every page without its own would inherit the root's preview image.
+    // Never add og:image or twitter:image here: every page without its own would inherit it.
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Machabeng Sports Day 2026 — Live Results" },
+      { name: "description", content: "Live results, house standings and awards for the Machabeng College Inter-House Sports Day." },
+      { name: "author", content: "Machabeng College" },
+      { name: "theme-color", content: "#1f2533" },
+      { property: "og:title", content: "Machabeng Sports Day 2026 — Live Results" },
+      { property: "og:description", content: "Live results, house standings and awards for the Machabeng College Inter-House Sports Day." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -123,8 +131,26 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <AuthProvider>
+        <AppFrame />
+      </AuthProvider>
     </QueryClientProvider>
+  );
+}
+
+function AppFrame() {
+  const live = useRealtimeSync();
+  return (
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader live={live} />
+      <main className="flex-1">
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </main>
+      <footer className="no-print border-t border-border py-6 text-center text-xs text-muted-foreground">
+        Machabeng College Inter-House Sports Day · 20 November 2026
+      </footer>
+      <Toaster richColors position="top-center" />
+    </div>
   );
 }

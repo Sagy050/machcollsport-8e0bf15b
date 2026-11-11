@@ -14,16 +14,182 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          gender: Database["public"]["Enums"]["event_gender"]
+          id: string
+          is_team: boolean
+          level: Database["public"]["Enums"]["event_level"]
+          measure: Database["public"]["Enums"]["measure_type"]
+          name: string
+          points_multiplier: number
+          scheduled_time: string | null
+          status: Database["public"]["Enums"]["event_status"]
+          updated_at: string
+          venue: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          gender?: Database["public"]["Enums"]["event_gender"]
+          id?: string
+          is_team?: boolean
+          level?: Database["public"]["Enums"]["event_level"]
+          measure?: Database["public"]["Enums"]["measure_type"]
+          name: string
+          points_multiplier?: number
+          scheduled_time?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          updated_at?: string
+          venue?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          gender?: Database["public"]["Enums"]["event_gender"]
+          id?: string
+          is_team?: boolean
+          level?: Database["public"]["Enums"]["event_level"]
+          measure?: Database["public"]["Enums"]["measure_type"]
+          name?: string
+          points_multiplier?: number
+          scheduled_time?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          updated_at?: string
+          venue?: string | null
+        }
+        Relationships: []
+      }
+      points_scale: {
+        Row: {
+          points: number
+          position: number
+        }
+        Insert: {
+          points: number
+          position: number
+        }
+        Update: {
+          points?: number
+          position?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          email: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      results: {
+        Row: {
+          created_at: string
+          event_id: string
+          house: Database["public"]["Enums"]["house_name"]
+          id: string
+          participant_name: string
+          performance: string | null
+          position: number | null
+          recorded_by: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          house: Database["public"]["Enums"]["house_name"]
+          id?: string
+          participant_name: string
+          performance?: string | null
+          position?: number | null
+          recorded_by?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          house?: Database["public"]["Enums"]["house_name"]
+          id?: string
+          participant_name?: string
+          performance?: string | null
+          position?: number | null
+          recorded_by?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "results_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_record: { Args: { _user_id: string }; Returns: boolean }
+      event_is_open: { Args: { _event_id: string }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      reset_all_results: { Args: never; Returns: undefined }
+      set_user_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "recorder" | "viewer"
+      event_gender: "boys" | "girls" | "open"
+      event_level: "junior" | "intermediate" | "senior" | "mixed"
+      event_status: "scheduled" | "in_progress" | "completed" | "finalised"
+      house_name: "ravens" | "hawks" | "eagles" | "falcons"
+      measure_type: "time" | "distance" | "height" | "score" | "placing"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +316,13 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "recorder", "viewer"],
+      event_gender: ["boys", "girls", "open"],
+      event_level: ["junior", "intermediate", "senior", "mixed"],
+      event_status: ["scheduled", "in_progress", "completed", "finalised"],
+      house_name: ["ravens", "hawks", "eagles", "falcons"],
+      measure_type: ["time", "distance", "height", "score", "placing"],
+    },
   },
 } as const
