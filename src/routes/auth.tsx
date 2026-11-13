@@ -9,11 +9,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/use-auth";
 
-type AuthSearch = { redirect?: string };
+type AuthSearch = { redirect?: string | undefined };
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): AuthSearch => ({
-    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+    redirect: typeof search["redirect"] === "string" ? search["redirect"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -76,12 +76,12 @@ function AuthPage() {
       options: { emailRedirectTo: window.location.origin, data: { display_name: name } },
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     if (!data.session) setSentConfirm(true);
   };
 
   const forgot = async () => {
-    if (!email) return toast.error("Enter your email first");
+    if (!email) { toast.error("Enter your email first"); return; }
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });

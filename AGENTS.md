@@ -28,3 +28,11 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Points, standings and awards are computed client-side from `src/lib/scoring.ts` (pure, unit-tested) using the shared points table — so changing the table recalculates every total consistently; never store per-result points.
+- One app-wide realtime subscription (`useRealtimeSync` in `__root.tsx`) invalidates the events/results/points queries — avoid per-page subscriptions to keep connections low.
+- Roles live in `user_roles` (admin/recorder/viewer); write permissions are enforced by RLS and security-definer helpers (`has_role`, `can_record`, `event_is_open`), with UI checks only for display.
+- Public pages (standings, events, reports, guide) need no login; only `/admin` sits under `_authenticated`.
+- Admin account creation uses a `createServerFn` that verifies the admin role before loading the service-role client.

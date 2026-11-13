@@ -203,11 +203,11 @@ function AddResultForm({ event }: { event: SportEvent }) {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!house) return toast.error("Pick a house");
+    if (!house) { toast.error("Pick a house"); return; }
     const participant = name.trim() || (event.is_team ? `${HOUSE_META[house].label} team` : "");
-    if (!participant) return toast.error("Enter the participant's name");
+    if (!participant) { toast.error("Enter the participant's name"); return; }
     const pos = position ? Number(position) : null;
-    if (pos !== null && (!Number.isInteger(pos) || pos < 1 || pos > 50)) return toast.error("Position must be 1–50");
+    if (pos !== null && (!Number.isInteger(pos) || pos < 1 || pos > 50)) { toast.error("Position must be 1–50"); return; }
     await add.mutateAsync({
       event_id: event.id,
       participant_name: participant,
@@ -268,7 +268,7 @@ function AutoRankButton({ event, rows }: { event: SportEvent; rows: SportResult[
   const run = async () => {
     const ranks = rankByPerformance(rows, event.measure);
     const changes = rows.filter((r) => (ranks.get(r.id) ?? null) !== r.position);
-    if (changes.length === 0) return toast("Positions already match performances");
+    if (changes.length === 0) { toast("Positions already match performances"); return; }
     setBusy(true);
     try {
       await Promise.all(changes.map((r) => update.mutateAsync({ id: r.id, patch: { position: ranks.get(r.id) ?? null } })));

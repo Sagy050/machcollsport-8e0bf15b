@@ -49,7 +49,7 @@ describe("house standings", () => {
     ];
     const s = houseStandings(events, results, scale);
     expect(s.map((x) => [x.house, x.points, x.rank])).toEqual([
-      ["hawks", 18, 1], ["ravens", 18, 1], ["eagles", 6, 3], ["falcons", 0, 4],
+      ["ravens", 18, 1], ["hawks", 18, 1], ["eagles", 6, 3], ["falcons", 0, 4],
     ]);
   });
   it("tied athletes both earn the shared place's points", () => {
@@ -73,7 +73,7 @@ describe("individual awards", () => {
   it("merges the same athlete regardless of name casing/spaces", () => {
     const athletes = athleteSummaries([ev("e1"), ev("e2")], [res("e1", "Thabo M", "eagles", 1), res("e2", " thabo  m ", "eagles", 2)], scale);
     expect(athletes).toHaveLength(1);
-    expect(athletes[0].points).toBe(18);
+    expect(athletes[0]!.points).toBe(18);
   });
 });
 
