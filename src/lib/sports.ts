@@ -15,7 +15,7 @@ export const HOUSES: House[] = ["ravens", "hawks", "eagles", "falcons"];
 
 export const HOUSE_META: Record<
   House,
-  { label: string; solid: string; soft: string; text: string; ring: string; border: string }
+  { label: string; solid: string; soft: string; text: string; ring: string; border: string; glow: string; bar: string }
 > = {
   ravens: {
     label: "Ravens",
@@ -24,6 +24,8 @@ export const HOUSE_META: Record<
     text: "text-ravens",
     ring: "ring-ravens",
     border: "border-ravens",
+    glow: "from-ravens/25",
+    bar: "bg-ravens",
   },
   hawks: {
     label: "Hawks",
@@ -32,14 +34,18 @@ export const HOUSE_META: Record<
     text: "text-hawks",
     ring: "ring-hawks",
     border: "border-hawks",
+    glow: "from-hawks/25",
+    bar: "bg-hawks",
   },
   eagles: {
     label: "Eagles",
     solid: "bg-eagles text-eagles-foreground",
     soft: "bg-eagles-soft",
-    text: "text-eagles-foreground",
+    text: "text-eagles",
     ring: "ring-eagles",
     border: "border-eagles",
+    glow: "from-eagles/25",
+    bar: "bg-eagles",
   },
   falcons: {
     label: "Falcons",
@@ -48,6 +54,8 @@ export const HOUSE_META: Record<
     text: "text-falcons",
     ring: "ring-falcons",
     border: "border-falcons",
+    glow: "from-falcons/25",
+    bar: "bg-falcons",
   },
 };
 

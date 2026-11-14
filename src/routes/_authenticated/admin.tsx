@@ -139,7 +139,7 @@ function EventsAdmin() {
         <p className="text-sm text-muted-foreground">{events.length} events</p>
         <Button onClick={() => { setEditing(null); setOpen(true); }}><Plus /> New event</Button>
       </div>
-      <ul className="divide-y overflow-hidden rounded-xl border bg-card shadow-card">
+      <ul className="divide-y overflow-hidden rounded-2xl border bg-card shadow-card">
         {events.map((e) => {
           const n = results.filter((r) => r.event_id === e.id).length;
           return (
@@ -409,7 +409,7 @@ function OfficialsAdmin() {
     <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
       <div className="space-y-3">
         <p className="text-sm text-muted-foreground">Change who can record results. People who sign up themselves start as viewers.</p>
-        <ul className="divide-y overflow-hidden rounded-xl border bg-card shadow-card">
+        <ul className="divide-y overflow-hidden rounded-2xl border bg-card shadow-card">
           {(people.data ?? []).map((p) => (
             <li key={p.id} className="flex items-center gap-3 px-3 py-2.5">
               <div className="min-w-0 flex-1">
@@ -433,9 +433,9 @@ function OfficialsAdmin() {
 
       <form
         onSubmit={(e: FormEvent) => { e.preventDefault(); create.mutate(); }}
-        className="h-fit space-y-3 rounded-xl border bg-card p-4 shadow-card"
+        className="h-fit space-y-3 rounded-2xl border bg-card p-4 shadow-card"
       >
-        <p className="flex items-center gap-2 font-display text-lg font-bold uppercase"><UserPlus className="size-5" /> Create official account</p>
+        <p className="flex items-center gap-2 font-display text-lg font-bold"><UserPlus className="size-5" /> Create official account</p>
         <p className="text-xs text-muted-foreground">Ready to use immediately — no email confirmation needed. Share the password with the official.</p>
         <Field label="Name"><Input required maxLength={80} value={form.displayName} onChange={(e) => setForm({ ...form, displayName: e.target.value })} /></Field>
         <Field label="Email"><Input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field>
@@ -473,8 +473,8 @@ function DataAdmin() {
   });
 
   return (
-    <div className="max-w-lg space-y-3 rounded-xl border-2 border-destructive/40 bg-card p-4">
-      <p className="font-display text-lg font-bold uppercase text-destructive">Reset all results</p>
+    <div className="max-w-lg space-y-3 rounded-2xl border-2 border-destructive/40 bg-card p-4">
+      <p className="font-display text-lg font-bold text-destructive">Reset all results</p>
       <p className="text-sm text-muted-foreground">
         Deletes every result and sets all events back to “Scheduled”. Events, the points table and accounts are kept. Use this after testing, before the real day.
         Export a CSV from the Reports page first if you need a copy.

@@ -88,28 +88,33 @@ function EventPage() {
         <ArrowLeft className="size-4" /> Events
       </Link>
 
-      <header className="rounded-xl bg-ink p-5 text-chalk shadow-lift">
+      <header className="relative overflow-hidden rounded-3xl border bg-card p-6 shadow-lift">
+        <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" />
+        <div className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full bg-primary/15 blur-3xl" />
+        <div className="relative">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p className="eyebrow text-signal">
+            <p className="eyebrow text-primary">
               {LEVEL_LABEL[event.level]} · {GENDER_LABEL[event.gender]}
               {event.is_team && " · Team event"}
             </p>
-            <h1 className="text-4xl font-extrabold uppercase leading-none sm:text-5xl">{event.name}</h1>
-            <p className="mt-2 text-sm text-chalk/70">
+            <h1 className="mt-1 text-4xl font-extrabold leading-none sm:text-6xl">{event.name}</h1>
+            <p className="mt-3 text-sm text-muted-foreground">
               {[event.scheduled_time, event.venue, `Measured by ${MEASURE_LABEL[event.measure].toLowerCase()}`].filter(Boolean).join(" · ")}
               {Number(event.points_multiplier) !== 1 && ` · Points ×${Number(event.points_multiplier)}`}
             </p>
           </div>
           <StatusBadge status={event.status} className="text-sm" />
         </div>
-        <div className="mt-4 grid grid-cols-4 gap-2">
+        <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {houseTotals.map((t) => (
-            <div key={t.house} className={cn("rounded-md px-2 py-1.5 text-center", HOUSE_META[t.house].solid)}>
-              <p className="font-display text-xs font-semibold uppercase tracking-wider opacity-90">{HOUSE_META[t.house].label}</p>
-              <p className="font-display text-2xl font-extrabold tabular leading-none">{t.points}</p>
+            <div key={t.house} className="relative overflow-hidden rounded-xl border bg-background/60 px-3 py-2.5">
+              <div className={cn("absolute inset-x-0 top-0 h-0.5", HOUSE_META[t.house].bar)} />
+              <p className={cn("text-xs font-semibold", HOUSE_META[t.house].text)}>{HOUSE_META[t.house].label}</p>
+              <p className="mt-0.5 font-display text-2xl font-extrabold tabular leading-none">{t.points}</p>
             </div>
           ))}
+        </div>
         </div>
       </header>
 
@@ -224,7 +229,7 @@ function AddResultForm({ event }: { event: SportEvent }) {
   };
 
   return (
-    <form onSubmit={submit} className="space-y-3 rounded-xl border-2 border-primary/30 bg-card p-4 shadow-card">
+    <form onSubmit={submit} className="space-y-3 rounded-2xl border-2 border-primary/30 bg-card p-4 shadow-card">
       <p className="eyebrow text-primary">Add entry</p>
       <Input
         ref={nameRef}
@@ -376,7 +381,7 @@ function EditableRow({ row, event, scale, rows }: { row: SportResult; event: Spo
 
 function ReadOnlyTable({ rows, event, scale }: { rows: SportResult[]; event: SportEvent; scale: PointsScale }) {
   return (
-    <ul className="divide-y overflow-hidden rounded-xl border bg-card shadow-card">
+    <ul className="divide-y overflow-hidden rounded-2xl border bg-card shadow-card">
       {rows.map((r) => (
         <li key={r.id} className="flex items-center gap-3 px-3 py-3">
           <PositionMark position={r.position} />

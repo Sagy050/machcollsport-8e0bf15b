@@ -37,8 +37,8 @@ function ResetPassword() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-10">
-      <h1 className="text-4xl font-bold uppercase">New password</h1>
-      <form onSubmit={submit} className="mt-6 space-y-4 rounded-xl border bg-card p-5 shadow-card">
+      <h1 className="text-5xl font-extrabold">New password</h1>
+      <form onSubmit={submit} className="mt-6 space-y-4 rounded-2xl border bg-card p-5 shadow-card">
         <div className="space-y-1.5">
           <Label htmlFor="pw">New password</Label>
           <Input id="pw" type="password" minLength={8} required value={password} onChange={(e) => setPassword(e.target.value)} />

@@ -73,18 +73,18 @@ function Reports() {
       <section>
         <SectionTitle>Overall house ranking</SectionTitle>
         {winner && winner.points > 0 && (
-          <div className={cn("mb-4 flex items-center gap-4 rounded-xl p-5 shadow-lift", HOUSE_META[winner.house].solid)}>
-            <Trophy className="size-12 shrink-0" />
+          <div className={cn("relative mb-4 flex items-center gap-5 overflow-hidden rounded-3xl border bg-card bg-gradient-to-r to-transparent p-6 shadow-lift", HOUSE_META[winner.house].glow)}>
+            <span className={cn("grid size-16 shrink-0 place-items-center rounded-2xl", HOUSE_META[winner.house].solid)}><Trophy className="size-8" /></span>
             <div>
-              <p className="eyebrow opacity-80">{allFinal ? "Champions" : "Currently leading"}</p>
-              <p className="font-display text-5xl font-extrabold uppercase leading-none">{HOUSE_META[winner.house].label}</p>
+              <p className="eyebrow text-muted-foreground">{allFinal ? "Champions" : "Currently leading"}</p>
+              <p className={cn("font-display text-5xl font-extrabold leading-none", HOUSE_META[winner.house].text)}>{HOUSE_META[winner.house].label}</p>
               <p className="mt-1 font-semibold tabular">{winner.points} points</p>
             </div>
           </div>
         )}
-        <div className="overflow-hidden rounded-xl border bg-card shadow-card">
+        <div className="overflow-hidden rounded-2xl border bg-card shadow-card">
           <table className="w-full text-sm">
-            <thead className="bg-muted text-left text-xs uppercase tracking-wider text-muted-foreground">
+            <thead className="bg-muted/50 text-left text-xs uppercase tracking-wider text-muted-foreground">
               <tr><th className="px-3 py-2">Rank</th><th className="px-3 py-2">House</th><th className="px-3 py-2 text-right">Points</th><th className="px-3 py-2 text-right">Medals</th></tr>
             </thead>
             <tbody className="divide-y">
@@ -107,11 +107,12 @@ function Reports() {
           {HOUSES.map((h) => {
             const a = best[h];
             return (
-              <div key={h} className={cn("rounded-xl border-t-8 bg-card p-4 shadow-card", HOUSE_META[h].border)}>
-                <p className="eyebrow text-muted-foreground">{HOUSE_META[h].label}</p>
+              <div key={h} className="relative overflow-hidden rounded-2xl border bg-card p-5 shadow-card">
+                <div className={cn("absolute inset-x-0 top-0 h-1", HOUSE_META[h].bar)} />
+                <p className={cn("eyebrow", HOUSE_META[h].text)}>{HOUSE_META[h].label}</p>
                 {a ? (
                   <>
-                    <p className="mt-1 font-display text-2xl font-bold uppercase leading-tight">{a.name}</p>
+                    <p className="mt-1 font-display text-2xl font-bold leading-tight">{a.name}</p>
                     <p className="text-sm tabular">{a.points} pts · {a.events} event{a.events === 1 ? "" : "s"}</p>
                     <div className="mt-2"><MedalCounts gold={a.gold} silver={a.silver} bronze={a.bronze} /></div>
                   </>
@@ -128,7 +129,7 @@ function Reports() {
         <SectionTitle>Age-group champions</SectionTitle>
         <div className="grid gap-3 md:grid-cols-3">
           {champs.map((c) => (
-            <div key={c.level} className="rounded-xl border bg-card p-4 shadow-card">
+            <div key={c.level} className="rounded-2xl border bg-card p-4 shadow-card">
               <p className="eyebrow text-primary">{LEVEL_LABEL[c.level]} champion</p>
               {c.champion ? (
                 <>
@@ -148,7 +149,7 @@ function Reports() {
         {athletes.length === 0 ? (
           <EmptyState title="No individual results yet" />
         ) : (
-          <ol className="divide-y overflow-hidden rounded-xl border bg-card shadow-card">
+          <ol className="divide-y overflow-hidden rounded-2xl border bg-card shadow-card">
             {athletes.slice(0, 10).map((a, i) => (
               <li key={a.key} className="flex items-center gap-3 px-3 py-2.5">
                 <PositionMark position={i + 1} />
@@ -174,7 +175,7 @@ function Reports() {
               .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
             return (
               <div key={e.id} className="rounded-lg border bg-card p-3 shadow-card">
-                <p className="font-display font-bold uppercase">{eventTitle(e)}</p>
+                <p className="font-display font-bold">{eventTitle(e)}</p>
                 {podium.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No placings yet</p>
                 ) : (
@@ -201,7 +202,7 @@ function Reports() {
 function AthleteLine({ a, big }: { a: AthleteSummary; big?: boolean }) {
   return (
     <span className={cn("inline-flex flex-wrap items-center gap-2", big && "mt-1")}>
-      <span className={cn("font-semibold", big && "font-display text-2xl font-bold uppercase")}>{a.name}</span>
+      <span className={cn("font-semibold", big && "font-display text-2xl font-bold")}>{a.name}</span>
       <HouseBadge house={a.house} />
       <span className="text-sm tabular text-muted-foreground">{a.points} pts</span>
     </span>

@@ -21,7 +21,7 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
+        <h1 className="text-gradient text-8xl font-extrabold">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           The page you're looking for doesn't exist or has been moved.
@@ -86,7 +86,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Machabeng Sports Day 2026 — Live Results" },
       { name: "description", content: "Live results, house standings and awards for the Machabeng College Inter-House Sports Day." },
       { name: "author", content: "Machabeng College" },
-      { name: "theme-color", content: "#1f2533" },
+      { name: "theme-color", content: "#12151f" },
       { property: "og:title", content: "Machabeng Sports Day 2026 — Live Results" },
       { property: "og:description", content: "Live results, house standings and awards for the Machabeng College Inter-House Sports Day." },
       { property: "og:type", content: "website" },
@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&display=swap",
       },
       {
         rel: "stylesheet",
@@ -147,8 +147,11 @@ function AppFrame() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </main>
-      <footer className="no-print border-t border-border py-6 text-center text-xs text-muted-foreground">
-        Machabeng College Inter-House Sports Day · 20 November 2026
+      <footer className="no-print mt-12 border-t border-border">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-6 text-xs text-muted-foreground">
+          <span>Machabeng College · Inter-House Sports Day</span>
+          <span className="tabular">20 November 2026</span>
+        </div>
       </footer>
       <Toaster richColors position="top-center" />
     </div>

@@ -2,17 +2,17 @@ import { cn } from "@/lib/utils";
 import { STATUS_LABEL, type EventStatus } from "@/lib/sports";
 
 const STYLE: Record<EventStatus, string> = {
-  scheduled: "bg-muted text-muted-foreground",
-  in_progress: "bg-signal text-signal-foreground",
-  completed: "bg-accent text-accent-foreground",
-  finalised: "bg-ink text-chalk",
+  scheduled: "border-border bg-muted/60 text-muted-foreground",
+  in_progress: "border-live/40 bg-live/15 text-live",
+  completed: "border-primary/30 bg-primary/10 text-primary",
+  finalised: "border-foreground/20 bg-foreground/10 text-foreground",
 };
 
 export function StatusBadge({ status, className }: { status: EventStatus; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold",
+        "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold",
         STYLE[status],
         className,
       )}

@@ -31,8 +31,8 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       type="button"
       onClick={onClick}
       className={cn(
-        "shrink-0 rounded-full border px-3 py-1 text-sm font-semibold transition-colors",
-        active ? "border-ink bg-ink text-chalk" : "border-border bg-card text-muted-foreground hover:text-foreground",
+        "shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors",
+        active ? "border-foreground bg-foreground text-background" : "border-border bg-card/60 text-muted-foreground hover:text-foreground",
       )}
     >
       {children}
@@ -76,15 +76,15 @@ function EventsPage() {
       </PageHeader>
 
       {canRecord && (
-        <p className="rounded-lg border-l-4 border-primary bg-accent px-4 py-2 text-sm text-accent-foreground">
+        <p className="rounded-2xl border border-primary/30 bg-accent px-4 py-3 text-sm text-accent-foreground">
           You're signed in as an official. Open any event to record results.
         </p>
       )}
 
       <div className="space-y-3">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input placeholder="Search events…" value={q} onChange={(e) => setQ(e.target.value)} className="h-11 pl-9" />
+          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input placeholder="Search events…" value={q} onChange={(e) => setQ(e.target.value)} className="h-12 rounded-2xl bg-card/60 pl-10" />
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1">
           <Chip active={level === "all"} onClick={() => setLevel("all")}>All levels</Chip>
@@ -105,7 +105,7 @@ function EventsPage() {
       ) : filtered.length === 0 ? (
         <EmptyState title="No events match">Try a different filter.</EmptyState>
       ) : (
-        <ul className="grid gap-2 sm:grid-cols-2">
+        <ul className="grid gap-3 sm:grid-cols-2">
           {filtered.map((e) => {
             const c = counts.get(e.id);
             return (
@@ -113,14 +113,15 @@ function EventsPage() {
                 <Link
                   to="/events/$eventId"
                   params={{ eventId: e.id }}
-                  className="group flex h-full items-stretch overflow-hidden rounded-lg border bg-card shadow-card transition-colors hover:border-primary"
+                  className="group flex h-full items-stretch gap-1 overflow-hidden rounded-2xl border bg-card p-2 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary/50"
                 >
-                  <div className="flex w-16 shrink-0 flex-col items-center justify-center bg-muted px-1 text-center">
+                  <div className="flex w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-muted px-1 text-center">
                     <span className="font-display text-lg font-bold tabular leading-none">{e.scheduled_time ?? "—"}</span>
+                    <span className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground">Start</span>
                   </div>
                   <div className="min-w-0 flex-1 px-3 py-2.5">
                     <div className="flex items-start justify-between gap-2">
-                      <p className="font-display text-lg font-bold uppercase leading-tight">{e.name}</p>
+                      <p className="font-display text-lg font-bold leading-tight">{e.name}</p>
                       <StatusBadge status={e.status} />
                     </div>
                     <p className="text-xs text-muted-foreground">

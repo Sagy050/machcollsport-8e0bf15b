@@ -98,16 +98,16 @@ function AuthPage() {
     <div className="mx-auto grid max-w-md gap-6 px-4 py-10">
       <div>
         <p className="eyebrow text-primary">Officials</p>
-        <h1 className="text-4xl font-bold uppercase">Sign in</h1>
+        <h1 className="text-5xl font-extrabold">Sign in</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Spectators don't need an account — <Link to="/" className="underline">view live standings</Link>.
         </p>
       </div>
 
-      <div className="rounded-xl border bg-card p-5 shadow-card">
+      <div className="rounded-3xl border bg-card p-6 shadow-lift">
         {sentConfirm ? (
           <div className="space-y-2 text-center">
-            <h2 className="text-2xl font-bold uppercase">Check your email</h2>
+            <h2 className="text-2xl font-bold">Check your email</h2>
             <p className="text-sm text-muted-foreground">
               We sent a confirmation link to <strong>{email}</strong>. After confirming, an admin can give you recorder access.
             </p>
